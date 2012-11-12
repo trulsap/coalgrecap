@@ -1,0 +1,366 @@
+\documentclass{amsart}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{proof}
+\usepackage{cancel}
+\usepackage{color}
+\usepackage{graphics}
+\usepackage{verbatim}
+\usepackage{tikz}
+
+\usetikzlibrary{arrows}
+
+\usepackage{ulem}
+\usepackage{caption}
+
+\theoremstyle{definition}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conjecture}[thm]{Conjecture}
+\newtheorem{definition}[thm]{Definition}
+\newtheorem{proposition}[thm]{Proposition}
+\newtheorem{example}[thm]{Example}
+
+
+
+\newcommand{\truls}[1]{\textbf{\textcolor{magenta}{(T: #1)}}}
+\newcommand{\sjur}[1]{\textbf{\textcolor{blue}{(S: #1)}}}
+\newcommand{\piotr}[1]{\textbf{\textcolor{OliveGreen}{(P: #1)}}}
+\newcommand{\erik}[1]{\textbf{\textcolor{Peach}{(E: #1)}}}
+\newcommand{\todo}[1]{\textcolor{Red}{\footnote{TODO: #1}}}
+
+\newcommand{\nn}{\mathbb N}
+\newcommand{\rr}{\mathbb R}
+\newcommand{\ca}{\mathcal A}
+\newcommand{\cb}{\mathcal B}
+
+\begin{document}
+
+\section{Background and history}
+\begin{description}
+\item[Abstract systems] (Emmy Noether)
+
+\begin{quote}
+Amalie Emmy Noether (German: [ˈnøːtɐ]; 23 March 1882 – 14 April 1935), sometimes referred to as Emily[1] or Emmy, was an influential German mathematician known for her groundbreaking contributions to abstract algebra and theoretical physics. Described by Pavel Alexandrov, Albert Einstein, Jean Dieudonné, Hermann Weyl, Norbert Wiener and others as the most important woman in the history of mathematics,[2][3] she revolutionized the theories of rings, fields, and algebras. In physics, Noether's theorem explains the fundamental connection between symmetry and conservation laws.[4] (wikipedia)\end{quote}
+
+\item[Universal Algebra] Garrett Birkhoff
+\begin{quote}
+Garrett Birkhoff (January 19, 1911 – November 22, 1996) was an American mathematician. He is best known for his work in lattice theory. (wikipedia)
+\end{quote}
+
+\begin{quote}The following paper is a study of abstract algebras qua abstract algebras. As no vocabulary suitable for this purpose is current, I have been forced to use a number of new terms, and extend the meaning of some accepted ones. (abstract, ``On the structure of Abstract Algebra'' 1935)
+\end{quote}
+\end{description}
+
+\section{Mathematical Preliminaries}
+
+\begin{definition}\textbf{(Stream)} A \textit{stream} $(S, \leq)$ over alphabet $A$ is a subset of lists over $A$, $S \subseteq A^\ast$ together with an ordering $\leq$ such that
+\begin{itemize}
+\item $(S, \leq)$ is linearly ordered, and
+\item $(S, \leq)$ is prefix closed.
+\end{itemize}
+\end{definition}
+
+\begin{definition}\textbf{(Infinite Tree)} An \textit{infinite tree} is like a stream, but not linearly ordered.
+\end{definition}
+
+\begin{definition}\textbf{(Algebra)} An \textit{algebra} is a tuple $(C, op_1, \dots, op_n)$ where
+\begin{itemize}
+\item $C$ is a non-empty set called the \textit{carrier set}, and
+\item for each $1 \leq i \leq n$, $op_i : C^x \to C$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}\textbf{(Signature)} A \textit{signature} is a pair $\Sigma = (OP, ar)$ where
+\begin{itemize}
+\item $OP$ is a set of operation names, and
+\item $ar : OP \to \mathbb N$ is the arity map.
+\end{itemize}
+\end{definition}
+
+\begin{example} Here are some algebras.
+  \begin{enumerate}
+  \item $\mathcal N_1$ is an algebra with carrier set $\mathbb N$ and a single operation $s : \nn \to \nn$.
+  \item $\mathcal N_2$ is an algebra with carrier set $\nn$ and two operations: $s : \nn \to \nn$ and $\_+\_ : \nn \times \nn \to \nn$.
+  \item $\mathcal R_\ast$ is an algebra where the carrier set is the set of positive real numbers $\mathbb R_+$ and the three operations are the constant $1 : \rr_+^0 \to \rr_+$ (or $1 : \mathbf 1 \to \rr_+$), the unary map $\frac 1 \_ : \rr_+ \to \rr_+$, and the binary operation $\_*\_ : \rr_+^2 \to \rr_+$.
+  \item $\mathcal L$ is a \textit{two-sorted} algebra (of lists) where the carriers are $\nn$ and $\nn^\ast$, the operations are
+    \begin{itemize}
+    \item a constant (empty list) $[\ ] : \mathbf 1 \to \nn^\ast$,
+    \item binary (building) $\_ :\_ : \nn \times \nn^\ast \to \nn^\ast$, and
+    \item binary (concatination) $\_ ++ \_ : \nn^\ast \times \nn^\ast \to \nn^\ast$.
+    \end{itemize}
+  \item $\wp$ is a two-sorted algebra where the carrier sets are $\nn$ and $\wp \nn$, with operations
+    \begin{itemize}
+    \item constant $\emptyset : \mathbf 1 \to \wp \nn$,
+    \item binary $\{\_\}\cup\_ : \nn \times \wp \nn \to \wp \nn$, and
+    \item binary $\_ \cup \_ : \wp\nn \times \wp \nn \to \wp \nn$.
+    \end{itemize}
+  \end{enumerate}
+
+  Here is a signature.
+  \begin{enumerate}
+    \item $\Sigma_1 = (OP_1, ar_1)$ where $OP_1 = \{c, u\}$, $ar_1(c) = 0$ and $ar_1(u) = 1$. 
+
+      (The signature of a simple algebra with one constant and one unary operation.)
+  \end{enumerate}
+\end{example}
+
+\begin{definition}\textbf{(Subalgebra)} An $\Sigma$-algebra $\ca$ is a subalgebra of $\Sigma$-algebra $\cb$ if
+\begin{itemize}
+\item $A \subseteq B$, and
+\item $op^\ca = op^\cb \downarrow A^{ar(op)}$ for each $op \in OP$.
+\end{itemize}
+\end{definition}
+
+If $\ca$ is a subalgebra of $\cb$, $A$ contains all constants and $A$ is closed under the operations in $\cb$.
+
+\begin{definition}\textbf{(Homomorphism)} $f : \ca \to \cb$ is a \textit{$\Sigma$-homomorphism} from $\ca$ to $\cb$ if
+\begin{itemize}
+\item $f : A \to B$, and 
+\item for all $op \in OP$ and all $(a_1, \dots, a_n) \in A^{ar(op)}$
+$$f(op^\ca(a_1, \dots, a_n)) = op^\cb(f(a_1), \dots, f(a_n)).$$
+\end{itemize}
+or, more diagramatically, the following diagram commutes
+
+\begin{center}
+\begin{tikzpicture}
+\node (srcA) at (0.0, 2.0) {$A^{ar(op)}$};
+\node (trgA) at (2.0, 2.0) {$A$};
+\node (srcB) at (0.0, 0.0) {$B^{ar(op)}$};
+\node (trgB) at (2.0, 0.0) {$B$};
+
+\node (eq) at (1.0, 1.0) {$=$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (srcA) edge [mystyle] node[above]{$op^\ca$} (trgA);
+\path (srcB) edge [mystyle] node[above]{$op^\cb$} (trgB);
+\path (srcA) edge [mystyle] node[left]{$f^{ar(op)}$} (srcB);
+\path (trgA) edge [mystyle] node[right]{$f$} (trgB);
+\end{tikzpicture}
+\end{center}
+\end{definition}
+
+\begin{proposition} A $\Sigma$-homomorphism $f : \ca \to \cb$ is
+\begin{description}
+\item [monic] iff $f : A \to B$ is \textit{injective}
+\begin{center}
+\begin{tikzpicture}
+\node (A) at (-1.0, 0.0) {$A$};
+\node (B) at (1.0, 0.0) {$B$};
+\node (C) at (-3, 0) {$C$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (A.20) edge [mystyle] node[above]{$f$} (B.160);
+\path (A.340) edge [mystyle] node[below]{$g$} (B.200);
+\tikzset{mystyle/.style={->,thick,dashed}};  
+\path (C) edge[mystyle] node[above]{$h$} (A);
+\end{tikzpicture}
+\end{center}
+
+\item [epic] iff $f : A \to B$ is \textit{surjective}
+\begin{center}
+\begin{tikzpicture}
+\node (A) at (-1.0, 0.0) {$A$};
+\node (B) at (1.0, 0.0) {$B$};
+\node (C) at (3, 0) {$C$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (A.20) edge [mystyle] node[above]{$f$} (B.160);
+\path (A.340) edge [mystyle] node[below]{$g$} (B.200);
+\tikzset{mystyle/.style={->,thick,dashed}};  
+\path (B) edge[mystyle] node[above]{$h$} (C);
+\end{tikzpicture}
+\end{center}
+
+\item [iso] iff $f : A \to B$ is \textit{bijective}
+\begin{center}
+\begin{tikzpicture}
+\node (A) at (-1.0, 0.0) {$A$};
+\node (B) at (1.0, 0.0) {$B$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (A) edge [mystyle] node[above]{$f$} (B);
+\end{tikzpicture}
+\end{center}
+\end{description}
+\end{proposition}
+
+\subsection{Epi-mono factorization and the kernel}
+For any map $f : A \to B$ there is an epi-mono factorization. That is there are maps $f'_1 : A \to Z$ and $f'_2 : Z \to B$ such that 
+\begin{itemize}
+\item $f'_1$ is epi, 
+\item $f'_2$ is mono, and
+\item $f = f'_1;f'_2$.
+\end{itemize}
+
+\begin{proposition} Epi-mono factorizations are unique upto isomorphisms
+\begin{center}
+\begin{tikzpicture}
+\node (A) at (-2.0, 0.0) {$A$};
+\node (B) at (2.0, 0.0) {$B$};
+
+\node (y) at (0, 2) {$y$};
+\node (x) at (0, -2) {$x$};
+
+\node (f) at (-0.7, 0.3) {$f$};
+\node (g) at (0.3, 0.7) {$\exists ! g$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (A) edge [mystyle] node {} (B);
+\path (A) edge[mystyle] node[left]{$e_2$} (y);
+\path (A) edge[mystyle] node[left]{$e_1$} (x);
+\path (y) edge[mystyle] node[right]{$m_2$} (B);
+\path (x) edge[mystyle] node[right]{$m_1$} (B);
+\tikzset{mystyle/.style={->,thick,dashed}};  
+\path (y) edge[mystyle] node[right]{} (x);
+\end{tikzpicture}
+\end{center}
+\end{proposition}
+
+\begin{definition}\textbf{(Kernel)} The \textit{kernel} $ker(f)$ of a function is the relation
+$$ker(f) = \{(a,a') \in A \times A ~|~ f(a) = f(a')\}$$
+\end{definition}
+
+The kernel of a function induces an equivalence on the domain
+\begin{equation} 
+\equiv ~:=~ ker(f)
+\end{equation}
+
+This allows the construction of the quotient set 
+\begin{equation}
+A/_\equiv ~:=~ \{[a]_\equiv ~|~ a \in A\} \text{ where } [a]_\equiv = \{a' ~|~ (a,a') \in \equiv\}
+\end{equation}
+
+\begin{center}
+\begin{tikzpicture}
+\node (A) at (-2.0, 0.0) {$A$};
+\node (B) at (2.0, 0.0) {$B$};
+
+\node (y) at (0, 2) {$A/_\equiv$};
+\node (x) at (0, -2) {$f(A)$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (A) edge [mystyle] node {} (B);
+\path (A) edge[mystyle] node[left]{$ker$} (y);
+\path (A) edge[mystyle] node[left]{$f\downarrow$} (x);
+\path (y) edge[mystyle] node[right]{$m$} (B);
+\path (x) edge[mystyle] node[right]{$\subseteq$} (B);
+\end{tikzpicture}
+\end{center}
+
+\begin{definition}\textbf{(Equ(A))} All equivalence classes on $A$ is $Equ(A)$. 
+\end{definition}
+
+\begin{proposition} About $Equ(A)$
+\begin{itemize}
+\item $Equ(A)$ is ordered by $\subseteq$
+\begin{itemize}
+\item the minimal element is the diagonal $\Delta_A = \{(a,a) ~|~ a \in A\}$
+\item the maximal element is the complete graph $A\times A$
+\end{itemize}
+\item \textbf{meet:} Equ(A) is closed under intersection
+\item \textbf{join:} the join of $\equiv_1$ and $\equiv_2$ is the equivalence class $\equiv$ generated by $\equiv_1 \cup \equiv_2$.
+\end{itemize}
+\end{proposition}
+
+\begin{definition}\textbf{($\Sigma$-conguence)} Let $\ca$ be an algebra. $\equiv ~\subseteq~ A^2$ is a $\Sigma$-congruence if
+\begin{itemize}
+\item $\equiv$ is an equivalence relation on $A$, and 
+\item for each $op \in OP$ with $n = ar(op)$
+$$ \text{if } (a_1, a_1'), \dots , (a_n, a_n') \in \equiv \text{ then } (op^\ca(a_1, \dots, a_n), op^\ca(a_1', \dots, a_n')) \in \equiv$$
+\end{itemize}
+\end{definition}
+
+\begin{proposition} if $f$ is a $\Sigma$-homomorphism, then $ker(f)$ is a $\Sigma$-congruence.
+\end{proposition}
+
+Categorically, the kernel is an equalizer of $\pi_1;f$ and $\pi_2;f$ (i.e., a pullback of $(f,f)$) in the following diagram
+\begin{center}
+\begin{tikzpicture}
+\node (A) at (0.0, -1.5) {$A$};
+\node (A') at (0, 1.5) {$A$};
+\node (A2) at (0, 0) {$A^2$};
+
+\node (B) at (2.0, 0.0) {$B$};
+\node (ker)  at (-3, 0) {$ker(f)$};
+
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (A) edge [mystyle] node[below]{$f$} (B);
+\path (A') edge [mystyle] node[above]{$f$} (B);
+\path (A2) edge[mystyle] node[left]{$\pi_2$} (A);
+\path (A2) edge[mystyle] node[left]{$\pi_1$} (A');
+\tikzset{mystyle/.style={->,thick,dashed}};  
+\path (ker) edge[mystyle] node{} (A);
+\path (ker) edge[mystyle] node{} (A');
+\tikzset{mystyle/.style={->,thick,right hook-latex}};  
+\path (ker) edge[mystyle] node[above]{} (A2);
+\end{tikzpicture}
+\end{center}
+
+\truls{Do we need more on kernels and category theory?}
+
+\section{Initial $\Sigma$-algebras}
+\begin{minipage}[b]{0.4\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\node (I) at (0.0, 0.8) {$\mathcal I$};
+\node (A) at (0.0, -0.8) {$\ca$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (I) edge [mystyle] node[right]{$\exists!\varepsilon_\ca$} (A);
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+For all $\Sigma$-algebras, there is a unique $\Sigma$-homomorphism, $\varepsilon_\ca : \mathcal I \to \ca$.\\
+$\rightsquigarrow~$ \textit{ground term} $\Sigma$-algebra, $\tau_\Sigma$\\
+\end{minipage}
+
+\begin{definition}\textbf{(Ground terms)} For a given signature $\Sigma$, the \textit{ground terms} $\tau_\Sigma$ is the least set which satisfies\footnote{Terms (elements of the carrier set of the term algebra) are underlined.}
+$$\text{if } \underline{t_1}, \dots, \underline{t_n} \in \tau_\Sigma \text{ and }ar(op) = n \text{ then } \underline{op(t_1, \dots, t_n)} \in \tau_\Sigma.$$
+\end{definition}
+
+\begin{definition}\textbf{(Term algebra)} The \textit{term algebra} for a signature $\Sigma$, is the algebra where the carrier set is the set of ground terms, and the operations are defined by
+$$op^{\tau_\Sigma}(\underline{t_1}, \dots , \underline{t_n}) ~:=~ \underline{op(t_1, \dots, t_n)}.$$
+\end{definition}
+
+Is the term algebra initial? 
+
+\begin{proposition}Yes.
+\end{proposition}
+
+\begin{proof} Let $\ca$ be an arbitrary $\Sigma$-algebra.
+\begin{center}
+\begin{tikzpicture}
+\node (nw) at (-3, 1.2) {$(t_1, \dots, t_n)$};
+\node (ne) at (3, 1.2) {$op(t_1, \dots, t_n)$};
+\node (sw) at (-3, -1.2) {$(\varepsilon_\ca(t_1), \dots, \varepsilon_\ca(t_n))$};
+\node (se) at (3, -1.2) {$\begin{matrix}op^\ca(\varepsilon_\ca(t_1), \dots, \varepsilon_\ca(t_n))\\=\varepsilon_\ca(op(t_1, \dots, t_n))\end{matrix}$};
+\node (eq) at (0, 0) {$=$};
+
+\tikzset{mystyle/.style={|->,thick}};  
+\path (nw) edge [mystyle] node[left]{$\varepsilon_\ca^n$} (sw);
+\path (nw) edge [mystyle] node[above]{$op^{\mathcal I}$} (ne);
+\path (ne) edge [mystyle] node[right]{$\varepsilon_\ca$} (se);
+\path (sw) edge [mystyle] node[above]{$op^\ca$} (se);
+\end{tikzpicture}
+\end{center}
+\end{proof}
+
+\subsection{Characterization of Initial $\Sigma$-algebras}
+\begin{itemize}
+\item all $op^{\mathcal I}$ are injective
+\item for all $op_1 \neq op_2$
+$$op^{\mathcal I}_1(\underbrace{I^{ar(op_1)}}_{(*)}) \cap op^{\mathcal I}_2(\underbrace{I^{ar(op_2)}}_{(*)}) = \emptyset.$$
+$(*)$ is a vector of appropriate arguments
+\item for all $i \in I$ there exists $op \in OP$ and $i_1, \dots, i_n \in I$ such that
+$$ op(i_1, \dots, i_n) = i.$$
+\item $\mathcal I$ has no propper subalgebras
+\end{itemize}
+
+\section{Induction $\simeq$ Initiality ($\simeq$ Universal property of Constructors)}
+
+\end{document}
