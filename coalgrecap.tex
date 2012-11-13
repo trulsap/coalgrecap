@@ -360,5 +360,110 @@ $$ op(i_1, \dots, i_n) = i.$$
 \end{itemize}
 
 \section{Induction $\simeq$ Initiality ($\simeq$ Universal property of Constructors)}
+\begin{example}Let's define the function $2 * \_ : \nn \to \nn$! 
+\begin{description}
+\item[Old school] Base case: $2 * 0 := 0$; induction step: $2 * s(n) := (2 * n) + 2$.
+\item[21st century] ``Make it communte!'' (Paraphrasing Tom Waits)
+\begin{figure}[ht]
+\begin{minipage}[b]{0.4\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\node (a1) at (-1, 1) {$\mathsf 1$};
+\node (a2) at (1, 1) {$\nn$};
+\node (b1) at (-1, -1) {$\mathsf 1$};
+\node (b2) at (1, -1) {$\nn$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (a1) edge [mystyle] node[above]{$0$} (a2);
+\path (a1) edge [mystyle] node[left]{$id_{\mathsf 1}$} (b1);
+\path (b1) edge [mystyle] node[above]{$0$} (b2);
+\path (a2) edge [mystyle] node[right]{$2 * \_$} (b2);
+\end{tikzpicture}
+\end{center}
+\caption{\\Base case}
+\end{minipage}
+\begin{minipage}[b]{0.4\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\node (a1) at (-1, 1) {$\nn$};
+\node (a2) at (1, 1) {$\nn$};
+\node (b1) at (-1, -1) {$\nn$};
+\node (b2) at (1, -1) {$\nn$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (a1) edge [mystyle] node[above]{$s$} (a2);
+\path (a1) edge [mystyle] node[left]{$2 * \_$} (b1);
+\path (b1) edge [mystyle] node[above]{$\_ + 2$} (b2);
+\path (a2) edge [mystyle] node[right]{$2 * \_$} (b2);
+\end{tikzpicture}
+\end{center}
+\caption{\\Induction step}
+\end{minipage}
+\end{figure}
+
+Observe:
+\begin{itemize}
+\item The \textit{induction schema} is always the same (that's just the homomorphism property)
+\item Only the ``constants'' and operations changes ($\rightsquigarrow ~ \Sigma$-algebra)
+\end{itemize}
+\end{description}
+\end{example}
+
+\begin{example} What is $2 * 2$?
+\begin{center}
+\begin{tikzpicture}
+\node (s) at (0, 1) {$\star$};
+\node (s') at (0, -2) {$\star$};
+\node (f1) at (1.5, -0.5) {$=^1$};
+
+\node (0) at (3, 1) {$0$};
+\node (0') at (3, -2) {$0$};
+\node (f1) at (4.5, -0.5) {$=^2$};
+
+\node (1) at (6, 1) {$1$};
+\node (1') at (6, -2) {$2$};
+\node (f1) at (7.5, -0.5) {$=^2$};
+
+\node (2) at (9, 1) {$2$};
+\node (2') at (9, -2) {$4$};
+
+\tikzset{mystyle/.style={|->,thick}};  
+\path (s) edge [mystyle] node[above]{$0$} (0);
+\path (0) edge [mystyle] node[above]{$s$} (1);
+\path (1) edge [mystyle] node[above]{$s$} (2);
+
+\path (s) edge[mystyle] node[left]{$id_{\mathsf 1}$} (s');
+\path (0) edge[mystyle] node[left]{$2 * \_$} (0');
+\path (1) edge[mystyle] node[left]{$2 * \_$} (1');
+\path (2) edge[mystyle] node[left]{$2 * \_$} (2');
+
+\path (s') edge [mystyle] node[above]{$0$} (0');
+\path (0') edge [mystyle] node[above]{$\_ + 2$} (1');
+\path (1') edge [mystyle] node[above]{$\_ + 2$} (2');
+\end{tikzpicture}
+\end{center}
+$=^1$ is given by the base case in our definition (Figure 1) and $=^2$ is given by the induction step (Figure 2).
+So $2 * 2 = 4$.
+\end{example}
+
+\section{Abstraction step : describe an algebra as a \textit{single} arrow}
+A signature $\Sigma$ corresponds to a (type) functor $T_\Sigma : \mathsf{Set} \to \mathsf{Set}$. A $\Sigma$-\textit{algebra} $\ca$ with carrier set $A$, corresponds to a map $\alpha : T_\Sigma(A) \to A$. \truls{Need more? Didn't write down the general definition. Could invent it, but not completely sure where I'd stick the parameters if there are any.}
+
+\section{Categories ($Alg(T_\Sigma) \cong Alg(\Sigma)$)}
+
+Each $T_\Sigma$-algebra $(\alpha, A)$ defines a $\Sigma$-algebra $\ca_\alpha$ with carrier $A$ and operations $op^{\ca_\alpha} = x_i;\alpha$. 
+
+\begin{proposition} $\ca_{\alpha_\ca} = \ca$
+\end{proposition}
+
+\begin{proof} 1 and 2
+\begin{enumerate}
+\item $\ca \mapsto (\alpha_\ca, A) \mapsto \ca_{\alpha_\ca} = \ca$
+\item $(\alpha, A) \mapsto \ca_\alpha \mapsto (\alpha_{\ca_\alpha}, A) = (\alpha, A)$
+\end{enumerate}
+
+\end{proof}
+
+
 
 \end{document}
