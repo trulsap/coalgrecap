@@ -449,7 +449,10 @@ So $2 * 2 = 4$.
 \section{Abstraction step : describe an algebra as a \textit{single} arrow}
 A signature $\Sigma$ corresponds to a (type) functor $T_\Sigma : \mathsf{Set} \to \mathsf{Set}$. A $\Sigma$-\textit{algebra} $\ca$ with carrier set $A$, corresponds to a map $\alpha : T_\Sigma(A) \to A$. \truls{Need more? Didn't write down the general definition. Could invent it, but not completely sure where I'd stick the parameters if there are any.}
 
-\section{Categories ($Alg(T_\Sigma) \cong Alg(\Sigma)$)}
+\section{Categories}
+We abstract.
+
+\subsection{$\mathsf{Alg}(T_\Sigma) \cong \mathsf{Alg}(\Sigma)$}
 
 Each $T_\Sigma$-algebra $(\alpha, A)$ defines a $\Sigma$-algebra $\ca_\alpha$ with carrier $A$ and operations $op^{\ca_\alpha} = x_i;\alpha$. 
 
@@ -464,6 +467,223 @@ Each $T_\Sigma$-algebra $(\alpha, A)$ defines a $\Sigma$-algebra $\ca_\alpha$ wi
 
 \end{proof}
 
+\subsection{Algebras and Limits}
+Let $T$ be an endofunctor in category $\mathbb C$. Then $Alg(T)$ is the category of algebras of that type. 
 
+\begin{proposition} $\mathsf{Alg}(T)$ inherits all limits from $\mathbb C$.
+\end{proposition}
+
+Limits in $\mathsf{Alg}(T)$ are constructed by the limits on the \textit{carrier} from $\mathbb C$.
+
+\begin{example} We illustrate the previous proposition with \textit{product}.
+
+\begin{figure}[ht]
+\begin{tikzpicture}
+\node (tab) at (0, 0) {$T(A \times B)$};
+\node (ta) at (-4, 0) {$T(A)$};
+\node (tb) at (4, 0) {$T(B)$};
+
+\node (ab) at (0, -3) {$A \times B$};
+\node (a) at (-4, -3) {$A$};
+\node (b) at (4, -3) {$B$};
+
+\node (eq1) at (2, -1.5) {$=$};
+\node (eq2) at (-2, -1.5) {$=$};
+
+\tikzset{mystyle/.style={->,thick,dashed}};  
+\path (tab) edge [mystyle] node[above]{$T(\pi_1)$} (ta);
+\path (tab) edge [mystyle] node[above]{$T(\pi_2)$} (tb);
+\path (tab) edge[mystyle] node[right]{$\alpha \times \beta$} (ab);
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (ab) edge [mystyle] node[above]{$\pi_1$} (a);
+\path (ab) edge [mystyle] node[above]{$\pi_2$} (b);
+\path (ta) edge[mystyle] node[left]{$\alpha$} (a);
+\path (tb) edge[mystyle] node[right]{$\beta$} (b);
+\end{tikzpicture}
+\caption{$\alpha \times \beta ~:=~ \langle T(\pi_1);\alpha, T(\pi_2);\beta \rangle$ }
+\end{figure}
+\end{example}
+
+(``limits/products are easy for algebras, \textit{because} the carrier is isolated on the RHS.'')
+
+\begin{proposition} If $\mathbb C$ is a category with (an?) initial object and colimits of ascending chains and $T$ is an endofunctor in $\mathbb C$ which preserves colimits of ascending chains, then the category $\mathsf{Alg}(T)$ has (an?) initial object.
+\end{proposition}
+
+\section{Coalgebras $\cong$ systems with ``next-state semantics''}
+Here are some coalgebras, which are of the form $A \to T(A)$ (turn the arrow). 
+
+\begin{example} Examples of coalgebras. (Exercise: Describe the systems with words.)
+\begin{enumerate}
+\item $T(X) = X$, hence $\alpha : X \to T(X)$.
+\item $T(X) = X + \mathsf 1$
+\item $T(X) = X \times A$ ($A$ is just a parameter (e.g., a set of symbols))
+\item $T(X) = X \times A + \mathsf 1$
+\item $T(X) = [A \to X]$ ($[A \to X] \cong X^A$ (maps from $A$ to $X$))
+\item $T(X) = \wp(X)$
+\end{enumerate}
+\end{example}
+
+The category of $T$-coalgebras are denoted $\mathsf{CAlg}(T)$.
+
+\begin{proposition} Let $T$ be an endofuctor in $\mathbb C$. $\mathsf{CAlg}(T)$ inherits all \textit{colimits} from $\mathbb C$.
+\end{proposition}
+
+\begin{example}The example of \textit{sum} would be basically the same the the example of \textit{product} above, but with the arrows going the other way.
+\end{example}
+
+\begin{example}Let $T(X) = X$. Coalgebras in $\mathsf{CAlg}(T)$ are of the form $\alpha : X \to X$. Given a state $x \in X$, we ``transition'' deterministically and unabiguously into the next state $\alpha(x) \in X$.
+\begin{figure}[ht]
+\begin{minipage}[b]{0.3\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\node (xl) at (0, 0) {$X$};
+\node (xr) at (2, 0) {$X$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (xl) edge[mystyle] node[above]{``next''} (xr);
+\end{tikzpicture}
+\end{center}
+\caption{``Shape''}
+\end{minipage}
+\begin{minipage}[b]{0.3\linewidth}
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\node (x1) at (0, 0) {$\cdot$};
+\node (x2) at (-1, 1) {$\cdot$};
+\node (x3) at (-1, -1) {$\cdot$};
+\node (x4) at (-2.5, -1) {$\cdots$};
+\node (x5) at (-2.5, 1) {$\cdots$};
+\node (x6) at (1.5, 0) {$\cdots$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (x1) edge[mystyle] node[]{} (x6);
+
+\path (x2) edge[mystyle] node[above]{} (x1);
+\path (x5) edge[mystyle] node[above]{} (x2);
+
+\path (x3) edge[mystyle] node[above]{} (x1);
+\path (x4) edge[mystyle] node[above]{} (x3);
+\end{tikzpicture}
+\end{center}
+\caption{\\Arbitrary}
+\end{minipage}
+\begin{minipage}[b]{0.3\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\node (x) at (0, 0) {$\cdot$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (x.0) edge[mystyle] node[bend right]{} (x.90);
+\end{tikzpicture}
+\end{center}
+\caption{\\Final}
+\end{minipage}
+\end{figure}
+\end{example}
+\truls{The ``Final'' one above should just be a reflexive point. Don't know tikzpicture well enough to do that.}
+
+\subsection{Discussion}
+Recall (and extrapolate): 
+\begin{itemize}
+\item initial algebra $\cong$ induction. Dually, final coalgebra $\cong$ coinduction.
+\item elements of initial algebra: (ground) terms; elements of final coalgebra: process/language/observable behaviour of systems.
+\item ``final'' $\rightsquigarrow$ ``identify (``collapse'') as much as possible''. Need a way to ``avoid trivial collapse'': two elements/states in the final coalgebra are different if they can be distinguished by \textit{observations}. (Think \textit{bisimulation}!)
+\end{itemize}
+
+\subsection{Constructing the final coalgebra.} But first recall:
+\subsubsection{Constructing the initial algebra $T^*(\mathcal I)$}
+For simplicity assume that $T : \mathsf{Set} \to \mathsf{Set}$. Then $\mathcal I = \emptyset$. We start with an empty set of terms $\emptyset$, then construct all terms of ``complexity'' at most 1, then all terms of ``complexity'' at most 2, and so on. We collect these in the colimit, the set of all (reachable/ground) terms. See Figure (number).
+
+\begin{figure}[ht]
+\begin{tikzpicture}
+\node (01) at (0, 0) {$\emptyset$};
+\node (02) at (2, 0) {$T(\emptyset)$};
+\node (03) at (4, 0) {$T^2(\emptyset)$};
+\node (04) at (6, 0) {$T^3(\emptyset)$};
+\node (05) at (8, 0) {$\cdots$};
+\node (06) at (10, 0) {$T^n(\emptyset)$};
+\node (07) at (12, 0) {$\cdots$};
+
+\node (star) at (7, -2.5) {$T^*(\emptyset)$};
+
+\node (t1) at (-1, -1.5) {initial obj.};
+\node (t2) at (3.5, -2) {colimit};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (01) edge[mystyle] node[above]{!} (02);
+\path (02) edge[mystyle] node[above]{!} (03);
+\path (03) edge[mystyle] node[above]{!} (04);
+\path (04) edge[mystyle] node[above]{!} (05);
+\path (05) edge[mystyle] node[above]{!} (06);
+\path (06) edge[mystyle] node[above]{!} (07);
+
+\path (02) edge[mystyle] node[above]{} (star);
+\path (03) edge[mystyle] node[above]{} (star);
+\path (04) edge[mystyle] node[above]{} (star);
+\path (06) edge[mystyle] node[above]{} (star);
+
+\tikzset{mystyle/.style={->,thick,dashed}};  
+\path (t1) edge[mystyle] node[above, bend left]{} (01);
+\path (t2) edge[mystyle] node[above, bend left]{} (star);
+\end{tikzpicture}
+\caption{Constructing the initial algebra.}
+\end{figure}
+
+Now, to construct the final coalgebra:\\
+
+\begin{figure}[ht]
+\begin{tikzpicture}
+\node (01) at (0, 0) {$\mathsf 1$};
+\node (02) at (2, 0) {$T(\mathsf 1)$};
+\node (03) at (4, 0) {$T^2(\mathsf 1)$};
+\node (04) at (6, 0) {$T^3(\mathsf 1)$};
+\node (05) at (8, 0) {$\cdots$};
+\node (06) at (10, 0) {$T^n(\mathsf 1)$};
+\node (07) at (12, 0) {$\cdots$};
+
+\node (star1) at (2, -3) {$T^*(\mathsf 1)$};
+\node (star2) at (5.5, -3.5) {$T(T^*(\mathsf 1))$};
+
+\node (t1) at (-1, -1.5) {final obj.};
+\node (t2) at (8.5, -2.5) {limit};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (02) edge[mystyle] node[above]{!} (01);
+\path (03) edge[mystyle] node[above]{!} (02);
+\path (04) edge[mystyle] node[above]{!} (03);
+\path (05) edge[mystyle] node[above]{!} (04);
+\path (06) edge[mystyle] node[above]{!} (05);
+\path (07) edge[mystyle] node[above]{!} (06);
+
+\path (star1) edge[mystyle] node[left]{$\pi_0$} (01);
+\path (star1) edge[mystyle] node[left]{$\pi_1$} (02);
+\path (star1) edge[mystyle] node[]{$\pi_2$} (03);
+\path (star1) edge[mystyle] node[above]{$\pi_3$} (04);
+\path (star1) edge[mystyle] node[right]{$\pi_n$} (06);
+
+\tikzset{mystyle/.style={->,thick,dotted}};  
+\path (star2) edge[mystyle] node[above]{!} (01);
+\path (star2) edge[mystyle] node[above]{} (02);
+\path (star2) edge[mystyle] node[above]{} (03);
+\path (star2) edge[mystyle] node[above]{} (04);
+\path (star2) edge[mystyle] node[above]{} (06);
+
+\path (star2) edge[mystyle] node[above]{$\tau^-$} (star1);
+
+\tikzset{mystyle/.style={->,thick,dashed}};  
+\path (t1) edge[mystyle] node[above, bend left]{} (01);
+\path (t2) edge[mystyle] node[above, bend left]{} (star2);
+\end{tikzpicture}
+\caption{Constructing the initial algebra.}
+\end{figure}
+
+\truls{I don't know. I don't get it anymore.}
+
+There is a unique $\tau^- : T(T^*(\mathsf 1)) \to T^*(\mathsf 1)$ such that $\tau^-;\pi_i = T(\pi_{i - 1})$. 
+
+We still need $\tau : T_*(\mathsf 1) \to T(T_*(\mathsf 1))$. 
+
+\truls{Could someone descripbe this process?}
 
 \end{document}
