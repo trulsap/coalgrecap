@@ -29,13 +29,18 @@
 \newcommand{\erik}[1]{\textbf{\textcolor{Peach}{(E: #1)}}}
 \newcommand{\todo}[1]{\textcolor{Red}{\footnote{TODO: #1}}}
 
-\newcommand{\nn}{\mathbb N}
-\newcommand{\rr}{\mathbb R}
-\newcommand{\ca}{\mathcal A}
-\newcommand{\cb}{\mathcal B}
+\newcommand{\nn}{\mathbb N} % the natural numbers
+\newcommand{\rr}{\mathbb R} % the real numbers
+\newcommand{\ca}{\mathcal A} % arbitrary algebra A (\ca = caligraphic A)
+\newcommand{\cb}{\mathcal B} % arbitrary algebra B (\cb = caligraphic B)
 
 % how about some consistent conventions?
-\newcommand{\cat}[1]{\mathbf{#1}}
+% T: okay. here you go.
+\newcommand{\cat}[1]{\mathsf{#1}} % Specific category, e.g., Set
+\newcommand{\acat}[1]{\mathbb{#1}} % Arbitrary category, e.g., C
+
+% \emph is usually underline. that's ugly. Can I please 
+\renewcommand{\emph}{\textit} %?
 
 \begin{document}
 
@@ -309,7 +314,7 @@ Categorically, the kernel is an equalizer of $\pi_1;f$ and $\pi_2;f$ (i.e., a pu
 
 \subsection{What is a category?}
 
-A \emph{category} $\mathbf{C}$ is a tuple comprising of:
+A \emph{category} $\acat{C}$ is a tuple comprising of:
 
 \begin{enumerate}
 \item a collection of \emph{objects};
@@ -317,7 +322,7 @@ A \emph{category} $\mathbf{C}$ is a tuple comprising of:
 \item  operations assigning to each morphism $f$ a \emph{domain} $dom\ f$,
   and a \emph{codomain} $cod\ f$. We write $f: A \to B$ to show that
   $dom\ f = A$ and $cod\ f = B$. The collection of all arrows with
-  domain $A$ and codomain $B$ is written $\mathbf{C}(A,B)$.
+  domain $A$ and codomain $B$ is written $\acat{C}(A,B)$.
 \item a composition operator assigning to each pair of arrows $f$ and $g$ a
   \emph{composite arrow} $g\circ f: dom\ f\to cod\ g$ that satisfies the
   law of associativity, i.e.~for any arrows $f: A \to B$, $g: B\to C$
@@ -334,13 +339,13 @@ set-theoretical sense, i.e.~they are just sets or proper classes.
 
 First we present a simple example, describing the category of sets.
 
-\subsubsection{Example: $\mathbf{Set}$}
+\subsubsection{Example: $\cat{Set}$}
 
 \begin{enumerate}
-\item Objects in $\mathbf{Set}$ are sets.
+\item Objects in $\cat{Set}$ are sets.
 \item Arrows $f: A\to B$ are total functions from set $A$ into set $B$.
 \item For every total function $f$, its domain $A$ and codomain $B$, we get
-  $dom\ f = A$, $cod\ f = B$, and $f \in \mathbf{Set}(A, B)$.
+  $dom\ f = A$, $cod\ f = B$, and $f \in \cat{Set}(A, B)$. \\\truls{Think it's written $f : \cat{Set}(A,B)$, isn't it?}
 \item Composition of one total function $f: A\to B$ with another total
   function $g: B\to C$ is the total function from $A$ to $C$ mapping
   each element $a \in A$ to $g(f(a))\in C$. Composition of total
@@ -354,7 +359,7 @@ First we present a simple example, describing the category of sets.
 
 \subsection{Dual notions}
 
-For each category $\cat{C}$, the objects of the dual category $\cat{C}^{op}$ are the same as those in $\cat{C}$, but the arrows in $\cat{C}^{op}$ are opposite. If $f: A~\to B$ is an arrow of $\cat{C}$ then $f: B \to A$ is an arrow of $\cat{C}^{op}$. 
+For each category $\acat{C}$, the objects of the dual category $\acat{C}^{op}$ are the same as those in $\acat{C}$, but the arrows in $\cat{C}^{op}$ are opposite. If $f: A~\to B$ is an arrow of $\acat{C}$ then $f: B \to A$ is an arrow of $\acat{C}^{op}$. 
 
 \subsubsection{Duality of injective \& surjective functions}
 
@@ -363,7 +368,7 @@ An arrow $f: B \to C$ is \emph{monic} if, for any pair of arrows $g: A\to B$ and
 \end{definition}
 
 \begin{proposition}
-In $\cat{Set}$, monic arrows are just the injective functions ($f(x) = f(x)$ implies $x=y$). 
+In $\acat{Set}$, monic arrows are just the injective functions ($f(x) = f(x)$ implies $x=y$). 
 \end{proposition}
 
 \begin{proof}
