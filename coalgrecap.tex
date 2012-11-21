@@ -523,6 +523,100 @@ $$ op(i_1, \dots, i_n) = i.$$
 \end{itemize}
 
 \section{Induction $\simeq$ Initiality ($\simeq$ Universal property of Constructors)}
+\truls{This section has eroded in to ramblings. I'm tired and I don't think I understand this anymore.}
+
+Consider some signature $\Sigma = (OP, ar)$. We have some basic vocabulary (constants and operations) to describe stuff. Suppose that we would like to define some function over these things. Standard structural induction of some function $f$ in this vocabulary goes about first defining the value of $f$ for all the constants and then how $f$ changes when we apply operations to the arguments of $f$.
+
+Say we have two constants ($c_1$ and $c_2$) and one unary operator ($u$). Our induction scheme would be 
+\begin{align*}
+f(c_1) &= \dots & \text{Base case 1} \\
+f(c_2) &= \dots & \text{Base case 2} \\
+f(u(x)) &= \dots(f(\dots)) & \text{Induction step}
+\end{align*}
+
+This should 
+\begin{enumerate}
+\item Define $f$ uniquely, and
+\item Define $f$ completely.
+\end{enumerate}
+
+Or, in other words
+\begin{enumerate}
+\item if both $f$ and $g$ complies with the definition, then\footnote{Upto isomorphism.} $f = g$, and \\
+(uniqueness of homomorphism from initial object)
+\item For every $x$, $f(x)$ is well-defined.\\
+(the initial algebra has no proper subalgebras)
+\end{enumerate}
+
+Structurally we can define a function as an algebra, and the inductive definition of the function described by the algebra will just be a homomorphism from the initial object to this given algebra. 
+
+\begin{example} Let $\Sigma_{\mathcal N} = (OP_{\mathcal N}, ar_{\mathcal N}) = (\{0, s\}, \{(0, 0), (s, 1)\})$ be the signature of the natural numbers. The initial algebra is the term-algebra $\mathcal I_{\mathcal N} = (\nn; 0, s)$ where we take $\nn$ to be the set of ground terms $\{0, s0, ss0, sss0, \dots\}$. 
+
+Suppse we would like to define some function $f$ which, in the classical notation would be defined as follows\footnote{I tried to make $f(sx) := g(f(h(x)))$, but I'm not sure of how to handle the $h$ yet... \\\begin{tikzpicture}[scale=0.4]
+\node[scale=0.7] (a1) at (-1, 1) {$\nn$};
+\node[scale=0.7] (a2) at (2, 1) {$\nn$};
+\node[scale=0.7] (b1) at (-1, -1) {$X(\nn)$};
+\node[scale=0.7] (b2) at (2, -1) {$X(\nn)$};
+\node[scale=0.7] (c1) at (-1, -3) {$X(\nn)$};
+\node[scale=0.7] (c2) at (2, -3) {$X(\nn)$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (a1) edge [mystyle] node[above, scale=0.8]{$s$} (a2);
+\path (a1) edge [mystyle] node[left, scale=0.8]{$h'$} (b1);
+\path (a2) edge [mystyle] node[right, scale=0.8]{$h'$} (b2);
+\path (b1) edge [mystyle] node[left, scale=0.8]{$f'$} (c1);
+\path (b2) edge [mystyle] node[right, scale=0.8]{$f'$} (c2);
+\path (c1) edge [mystyle] node[above, scale=0.8]{$g'$} (c2);
+\end{tikzpicture} or something crazy like that...}: 
+\begin{align*}
+f(0) ~&:=~ c & \text{Base case}\\
+f(sx) ~&:=~ g(f(x)) & \text{Induction step}
+%f(sx) ~&:=~ g(f(h(x))) & \text{Induction step}
+\end{align*}
+where $h$ is some previously defined function over $\mathcal I_{\mathcal N}$. 
+
+Now, suppose I provide two diagrams: 
+\begin{figure}[ht]
+\begin{minipage}[b]{0.4\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\node (a1) at (-1, 1) {$\mathsf 1$};
+\node (a2) at (1, 1) {$\nn$};
+\node (b1) at (-1, -1) {$\mathsf 1$};
+\node (b2) at (1, -1) {$\nn$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (a1) edge [mystyle] node[above]{$0$} (a2);
+\path (a1) edge [mystyle] node[left]{$id_{\mathsf 1}$} (b1);
+\path (b1) edge [mystyle] node[above]{$c$} (b2);
+\path (a2) edge [mystyle] node[right]{$f$} (b2);
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\begin{minipage}[b]{0.4\linewidth}
+\begin{center}
+\begin{tikzpicture}
+\node (a1) at (-1, 1) {$\nn$};
+\node (a2) at (1, 1) {$\nn$};
+\node (b1) at (-1, -1) {$\nn$};
+\node (b2) at (1, -1) {$\nn$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (a1) edge [mystyle] node[above]{$s$} (a2);
+\path (a1) edge [mystyle] node[left]{$f$} (b1);
+\path (b1) edge [mystyle] node[above]{$g$} (b2);
+\path (a2) edge [mystyle] node[right]{$f$} (b2);
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\end{figure}
+
+Recall that $c$ is some constant expression in $\mathcal I_{\mathcal N}$ and $g$ is a function in it. If I now say that $f$ is the map which makes both of these diagrams commute, we have defined $f$. 
+
+We have that $f : \nn \to \nn$, but also that it is the map in a homomorphism from $\mathcal I_{\mathcal N}$ to $\ca_f$ where $\ca_f = (f(\nn); c, g)$. We can see that, treated as a homomorphism in $\cat{Alg}(\Sigma)$, it maps $n : \mathcal I_{\mathcal N}$ to $f(n) : \ca_f$.
+\end{example}
+
+
 \begin{example}Let's define the function $2 * \_ : \nn \to \nn$! 
 \begin{description}
 \item[Old school] Base case: $2 * 0 := 0$; induction step: $2 * s(n) := (2 * n) + 2$.
