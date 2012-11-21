@@ -282,8 +282,8 @@ $$ \text{if } (a_1, a_1'), \dots , (a_n, a_n') \in \equiv \text{ then } (op^\ca(
    An equalizer of two parallel morphisms $f, g : A \rightarrow B$
   in a category C consists of an object E and a morphism $m : E \rightarrow A$
   with $m; f = m; g$. Moreover, the pair $(E, m)$ satisfies the following universal
-  property:
-
+  property\footnote{This universal property essentially says that E must be as
+    big as possible.}:
   \begin{itemize}
   \item For any other object X and morphism $f_x : X \rightarrow A$ with $f_{x} ; f = fx ;
     g$ there exists a unique morphism $k : X \rightarrow E$ such that $k; m =
@@ -296,7 +296,7 @@ $$ \text{if } (a_1, a_1'), \dots , (a_n, a_n') \in \equiv \text{ then } (op^\ca(
       E \ar[r]^{m} & A \ar@/^/[r]^{f} \ar@/_/[r]_{g} & B}
   \end{definition}
 
-\begin{proposition} if $f$ is a $\Sigma$-homomorphism, then $ker(f)$ is a
+\begin{proposition} If $f$ is a $\Sigma$-homomorphism, then $ker(f)$ is a
   $\Sigma$-congruence.
 \end{proposition}
 
