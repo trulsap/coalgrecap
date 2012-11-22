@@ -57,6 +57,10 @@ Garrett Birkhoff (January 19, 1911 – November 22, 1996) was an American mathem
 \end{quote}
 \end{description}
 
+\section{Behaviour and processes}
+
+\piotr{I'll write this maybe tomorrow\ldots}
+
 \section{Mathematical Preliminaries}
 
 \begin{definition}\textbf{(Stream)} A \textit{stream} $(S, \leq)$ over alphabet $A$ is a subset of lists over $A$, $S \subseteq A^\ast$ together with an ordering $\leq$ such that
@@ -66,13 +70,16 @@ Garrett Birkhoff (January 19, 1911 – November 22, 1996) was an American mathem
 \end{itemize}
 \end{definition}
 
+\begin{example} Here is an example of a~stream: $01010101010101\ldots$, where $S = \{0,01,010,0101,\ldots\}$ and the order is defined as $0 \leq 01\leq 010\leq 0101\leq\ldots$
+\end{example}
+
 \begin{definition}\textbf{(Infinite Tree)} An \textit{infinite tree} is like a stream, but not linearly ordered.
 \end{definition}
 
 \begin{definition}\textbf{(Algebra)} An \textit{algebra} is a tuple $(C, op_1, \dots, op_n)$ where
 \begin{itemize}
 \item $C$ is a non-empty set called the \textit{carrier set}, and
-\item for each $1 \leq i \leq n$, $op_i : C^x \to C$.
+\item for each $1 \leq i \leq n$, $op_i : C^x \to C$, where $x$ is the arity, i.e.\ $x = ar(op_{i})$. 
 \end{itemize}
 \end{definition}
 
@@ -145,7 +152,35 @@ or, more diagramatically, the following diagram commutes
 \end{center}
 \end{definition}
 
-\begin{proposition} A $\Sigma$-homomorphism $f : \ca \to \cb$ is
+\subsection{Duality of injective \& surjective functions}
+
+\begin{definition}
+An arrow $f: B \to C$ is \emph{monic} if, for any pair of arrows $g: A\to B$ and $h: A\to B$, $g;\! f = h;\! f$\footnote{Not sure how to write compositions, which convention to follow. } implies $g=h$.
+\end{definition}
+
+\begin{proposition}
+In $\cat{Set}$, monic arrows are just the injective functions ($f(x) = f(x)$ implies $x=y$). 
+\end{proposition}
+
+\begin{proof}
+  Let $f: B\to C$ be an injective function, and let $g,h: A\to B$ be such that $g;\! f = h;\! f$, but $g\neq h$. This means there is an element $a\in A$ for which $g(a) \neq h(a)$. But since $f$ is injective, $f(g(a))\neq f(h(a))$ which contradicts $g;\! f = h;\! f$. So $f$ is monic.
+
+  Conversely, let $f: B \to C$ be monic. If it's not injective, there are distinct elements $b, b' \in B$ for which $f(b) = f(b')$. Let $A$ be a~singleton set $\{a\}$, and let $g: A\to B$ map $a$ to $b$ while $h: A\to B$ maps $a$ to $b'$. Then $f(g(a)) = f(h(a))$, contradicting the assumption that $f$ is monic. 
+\end{proof}
+
+\begin{definition}
+An arrow $f: A\to B$ is \emph{epic} if, for any pairs of arrows $g: B\to C$ and $h: B\to C$, $f;\! g = f;\! h$ implies $g=h$. Epic is clearly dual to monic. 
+\end{definition}
+
+\begin{proposition}
+In $\cat{Set}$, epic arrows are just the surjective functions. 
+\end{proposition}
+
+\begin{proof}
+  nigga please
+\end{proof}
+
+Simply speaking: \begin{proposition} A $\Sigma$-homomorphism $f : \ca \to \cb$ is
 \begin{description}
 \item [monic] iff $f : A \to B$ is \textit{injective}
 \begin{center}
@@ -189,6 +224,129 @@ or, more diagramatically, the following diagram commutes
 \end{center}
 \end{description}
 \end{proposition}
+
+\section{Categories}
+
+A \emph{category} $\acat{C}$ is a tuple comprising of:
+
+\begin{enumerate}
+\item a collection of \emph{objects};
+\item a collection of \emph{morphisms} or \emph{arrows};
+\item  operations assigning to each morphism $f$ a \emph{domain} $dom\ f$,
+  and a \emph{codomain} $cod\ f$. We write $f: A \to B$ to show that
+  $dom\ f = A$ and $cod\ f = B$. The collection of all arrows with
+  domain $A$ and codomain $B$ is written $\acat{C}(A,B)$.
+\item a composition operator assigning to each pair of arrows $f$ and $g$ a
+  \emph{composite arrow} $g\circ f: dom\ f\to cod\ g$ that satisfies the
+  law of associativity, i.e.~for any arrows $f: A \to B$, $g: B\to C$
+  and $h: C \to D$: \[
+  h\circ (g \circ f) = (h \circ g) \circ f
+  \]
+\item for each object $A$, an \emph{identity} arrow $id_A: A \to A$ that
+  satisfies the identity law, i.e.~for any arrow $f: A\to B$:
+  $id_B \circ f = f$ and $f\circ id_A = f$
+\end{enumerate}
+
+\textbf{Remark:} Collections mentioned above are meant in a
+set-theoretical sense, i.e.~they are just sets or proper classes.
+
+First we present a simple example, describing the category of sets.
+
+\subsubsection{Example: $\cat{Set}$}
+
+\begin{enumerate}
+\item Objects in $\cat{Set}$ are sets.
+\item Arrows $f: A\to B$ are total functions from set $A$ into set $B$.
+\item For every total function $f$, its domain $A$ and codomain $B$, we get
+  $dom\ f = A$, $cod\ f = B$, and $f \in \cat{Set}(A, B)$. \\\truls{Think it's written $f : \cat{Set}(A,B)$, isn't it?}
+\item Composition of one total function $f: A\to B$ with another total
+  function $g: B\to C$ is the total function from $A$ to $C$ mapping
+  each element $a \in A$ to $g(f(a))\in C$. Composition of total
+  functions on sets is associative: for any $f: A\to B$, $g: B\to C$ and
+  $h:C \to D$, we get $h\circ (g\circ f) = (h\circ g)\circ f$.
+\item For each set $A$, the identity function $id_A$ is a total function
+  with domain and codomain $A$. For any function $f: A\to B$, the
+  identity functions on $A$ and $B$ satisfy the equations required by
+  the identity law: $id_B \circ f = f$ and $f \circ id_A = f$.
+\end{enumerate}
+
+\subsection{Dual notions}
+
+For each category $\acat{C}$, the objects of the dual category $\acat{C}^{op}$ are the same as those in $\acat{C}$, but the arrows in $\cat{C}^{op}$ are opposite. If $f: A~\to B$ is an arrow of $\acat{C}$ then $f: B \to A$ is an arrow of $\acat{C}^{op}$.
+
+\subsection{Initial \& final objects}
+
+\begin{definition}
+An object is called \emph{initial} if, for every object in $A$, there is exactly one arrow from it to $A$. 
+\end{definition}
+
+\begin{definition}
+Dually, an object is \emph{terminal} if, for every object in $A$, there is exactly one arrow from $A$ to $1$. 
+\end{definition}
+
+In $\cat{Set}$, the empty set $\emptyset$ is the only initial object: for every set $S$, the empty function is the only function from $\emptyset$ to $S$.
+
+Dually, each singleton set is a~terminal object, since for every set $S$ there is a~function from $S$ to a~singleton set $\{x\}$ mapping every element of $S$ to $x$, and this is the only total function from $S$ to $\{x\}$. 
+
+\subsubsection{Cartesian products and disjoint unions}
+
+\begin{itemize}
+\item elements can be treated as arrows from a~terminal object
+\item when we form a~product $A\times B$ we also define projections $\pi_{1}: A\times B \to A$ and $\pi_{2}: A\times B \to B$
+\item so product is actually a~tuple $(A\times B, \pi_{1},\pi_{2})$.
+\end{itemize}
+
+Let $C$ be a~set and $f: C\to A$, $g: C\to B$. We say a~\emph{product function} $\langle f,g\rangle: C \to A\times B$ is
+\[
+\langle f, g\rangle (x) = (f(x), g(x))
+\]
+Functions $f$ and $g$ can be recovered from $\langle f, g\rangle$ by setting $f = \langle f,g\rangle;\! \pi_{1}$ and $g = \langle f, g\rangle;\! \pi_{2}$.
+
+\begin{definition}
+  A~\emph{product} of two objects $A$ and $B$ is an object $A\times B$ together with \emph{projection arrows} $\pi_{1}: A\times B \to A$ and $\pi_{2}: A\times B \to B$, such that for any object $C$ and pair of arrows $f: C\to A$ and $g: C\to B$ there is exactly one \emph{mediating} arrow $\langle f,g\rangle: C\to A\times B$ making the diagram
+  
+  \begin{center}
+    \begin{tikzpicture}
+      \node (C)   at (0, 2) {$C$};
+      \node (A)   at (-3, 0) {$A$};
+      \node (B)   at (3, 0) {$B$};
+      \node (AxB) at (0, 0) {$A\times B$};
+      
+      \tikzset{mystyle/.style={->,thick}};
+ 
+      \path (AxB) edge [mystyle] node[below]{$\pi_{1}$} (A);
+      \path (AxB) edge [mystyle] node[below]{$\pi_{2}$} (B);
+      
+      \path (C) edge[mystyle] node[left,above]{$f$} (A);
+      \path (C) edge[mystyle] node[right,above]{$g$} (B);
+      \tikzset{mystyle/.style={->,dashed}};
+      \path (C) edge [mystyle] node[right]{$\langle f,g\rangle$} (AxB);
+    \end{tikzpicture}
+  \end{center}
+  commute, i.e. $\langle f,g\rangle;\! \pi_{1} = f$ and $\langle f,g\rangle;\! \pi_{2} = g$.
+\end{definition}
+
+\begin{definition}
+  A~\emph{coproduct} of $A$ and $B$ is $A+B$ together with two \emph{injection arrows} $c_{1}: A\to A+B$, $c_{2}: B \to A+B$, such that for any object $C$ and pair of arrows $f: A\to C$ and $g: B\to C$ there is exactly one arrow $[f,g]: A+B \to C$ making the diagram below commute.
+  \begin{center}
+    \begin{tikzpicture}
+      \node (A)   at (-3, 0) {$A$};
+      \node (A+B) at (0,0)   {$A+B$};
+      \node (B)   at (3,0)   {$B$};
+      \node (C)   at (0,-2)  {$C$};
+
+      \tikzset{mystyle/.style={->,thick}};
+      \path (A) edge [mystyle] node[above]{$c_{1}$} (A+B);
+      \path (B) edge [mystyle] node[above]{$c_{2}$} (A+B);
+      \path (A) edge [mystyle] node[left,below]{$f$} (C);
+      \path (B) edge [mystyle] node[right,below]{$g$} (C);
+
+      \tikzset{mystyle/.style={->,thick,dashed}};
+      \path (A+B) edge [mystyle] node[right]{$[f,g]$} (C);
+    \end{tikzpicture}
+  \end{center}
+  \emph{Remark:} $[f,g]$ is a~case distinction. 
+\end{definition}
 
 \subsection{Epi-mono factorization and the kernel}
 For any map $f : A \to B$ there is an epi-mono factorization. That is there are
@@ -316,162 +474,6 @@ of $(f,f)$) in the following diagram
   \end{tikzpicture}
 \end{center}
 
-\truls{Do we need more on kernels and category theory?}
-
-\piotr{Not sure, but pasting notes from my talk here anyway}
-
-\section{Piotr's take on Basic Constructions}
-
-\subsection{What is a category?}
-
-A \emph{category} $\acat{C}$ is a tuple comprising of:
-
-\begin{enumerate}
-\item a collection of \emph{objects};
-\item a collection of \emph{morphisms} or \emph{arrows};
-\item  operations assigning to each morphism $f$ a \emph{domain} $dom\ f$,
-  and a \emph{codomain} $cod\ f$. We write $f: A \to B$ to show that
-  $dom\ f = A$ and $cod\ f = B$. The collection of all arrows with
-  domain $A$ and codomain $B$ is written $\acat{C}(A,B)$.
-\item a composition operator assigning to each pair of arrows $f$ and $g$ a
-  \emph{composite arrow} $g\circ f: dom\ f\to cod\ g$ that satisfies the
-  law of associativity, i.e.~for any arrows $f: A \to B$, $g: B\to C$
-  and $h: C \to D$: \[
-  h\circ (g \circ f) = (h \circ g) \circ f
-  \]
-\item for each object $A$, an \emph{identity} arrow $id_A: A \to A$ that
-  satisfies the identity law, i.e.~for any arrow $f: A\to B$:
-  $id_B \circ f = f$ and $f\circ id_A = f$
-\end{enumerate}
-
-\textbf{Remark:} Collections mentioned above are meant in a
-set-theoretical sense, i.e.~they are just sets or proper classes.
-
-First we present a simple example, describing the category of sets.
-
-\subsubsection{Example: $\cat{Set}$}
-
-\begin{enumerate}
-\item Objects in $\cat{Set}$ are sets.
-\item Arrows $f: A\to B$ are total functions from set $A$ into set $B$.
-\item For every total function $f$, its domain $A$ and codomain $B$, we get
-  $dom\ f = A$, $cod\ f = B$, and $f \in \cat{Set}(A, B)$. \\\truls{Think it's written $f : \cat{Set}(A,B)$, isn't it?}
-\item Composition of one total function $f: A\to B$ with another total
-  function $g: B\to C$ is the total function from $A$ to $C$ mapping
-  each element $a \in A$ to $g(f(a))\in C$. Composition of total
-  functions on sets is associative: for any $f: A\to B$, $g: B\to C$ and
-  $h:C \to D$, we get $h\circ (g\circ f) = (h\circ g)\circ f$.
-\item For each set $A$, the identity function $id_A$ is a total function
-  with domain and codomain $A$. For any function $f: A\to B$, the
-  identity functions on $A$ and $B$ satisfy the equations required by
-  the identity law: $id_B \circ f = f$ and $f \circ id_A = f$.
-\end{enumerate}
-
-\subsection{Dual notions}
-
-For each category $\acat{C}$, the objects of the dual category $\acat{C}^{op}$ are the same as those in $\acat{C}$, but the arrows in $\cat{C}^{op}$ are opposite. If $f: A~\to B$ is an arrow of $\acat{C}$ then $f: B \to A$ is an arrow of $\acat{C}^{op}$. 
-
-\subsubsection{Duality of injective \& surjective functions}
-
-\begin{definition}
-An arrow $f: B \to C$ is \emph{monic} if, for any pair of arrows $g: A\to B$ and $h: A\to B$, $g;\! f = h;\! f$\footnote{Not sure how to write compositions, which convention to follow. } implies $g=h$.
-\end{definition}
-
-\begin{proposition}
-In $\cat{Set}$, monic arrows are just the injective functions ($f(x) = f(x)$ implies $x=y$). 
-\end{proposition}
-
-\begin{proof}
-  Let $f: B\to C$ be an injective function, and let $g,h: A\to B$ be such that $g;\! f = h;\! f$, but $g\neq h$. This means there is an element $a\in A$ for which $g(a) \neq h(a)$. But since $f$ is injective, $f(g(a))\neq f(h(a))$ which contradicts $g;\! f = h;\! f$. So $f$ is monic.
-
-  Conversely, let $f: B \to C$ be monic. If it's not injective, there are distinct elements $b, b' \in B$ for which $f(b) = f(b')$. Let $A$ be a~singleton set $\{a\}$, and let $g: A\to B$ map $a$ to $b$ while $h: A\to B$ maps $a$ to $b'$. Then $f(g(a)) = f(h(a))$, contradicting the assumption that $f$ is monic. 
-\end{proof}
-
-\begin{definition}
-An arrow $f: A\to B$ is \emph{epic} if, for any pairs of arrows $g: B\to C$ and $h: B\to C$, $f;\! g = f;\! h$ implies $g=h$. Epic is clearly dual to monic. 
-\end{definition}
-
-\begin{proposition}
-In $\cat{Set}$, epic arrows are just the surjective functions. 
-\end{proposition}
-
-\begin{proof}
-  nigga please
-\end{proof}
-
-\subsubsection{Empty \& singleton sets}
-
-\begin{definition}
-An object is called \emph{initial} if, for every object in $A$, there is exactly one arrow from it to $A$. 
-\end{definition}
-
-\begin{definition}
-Dually, an object is \emph{terminal} if, for every object in $A$, there is exactly one arrow from $A$ to $1$. 
-\end{definition}
-
-In $\cat{Set}$, the empty set $\emptyset$ is the only initial object: for every set $S$, the empty function is the only function from $\emptyset$ to $S$.
-
-Dually, each singleton set is a~terminal object, since for every set $S$ there is a~function from $S$ to a~singleton set $\{x\}$ mapping every element of $S$ to $x$, and this is the only total function from $S$ to $\{x\}$. 
-
-\subsubsection{Cartesian products and disjoint unions}
-
-\begin{itemize}
-\item elements can be treated as arrows from a~terminal object
-\item when we form a~product $A\times B$ we also define projections $\pi_{1}: A\times B \to A$ and $\pi_{2}: A\times B \to B$
-\item so product is actually a~tuple $(A\times B, \pi_{1},\pi_{2})$.
-\end{itemize}
-
-Let $C$ be a~set and $f: C\to A$, $g: C\to B$. We say a~\emph{product function} $\langle f,g\rangle: C \to A\times B$ is
-\[
-\langle f, g\rangle (x) = (f(x), g(x))
-\]
-Functions $f$ and $g$ can be recovered from $\langle f, g\rangle$ by setting $f = \langle f,g\rangle;\! \pi_{1}$ and $g = \langle f, g\rangle;\! \pi_{2}$.
-
-\begin{definition}
-  A~\emph{product} of two objects $A$ and $B$ is an object $A\times B$ together with \emph{projection arrows} $\pi_{1}: A\times B \to A$ and $\pi_{2}: A\times B \to B$, such that for any object $C$ and pair of arrows $f: C\to A$ and $g: C\to B$ there is exactly one \emph{mediating} arrow $\langle f,g\rangle: C\to A\times B$ making the diagram
-  
-  \begin{center}
-    \begin{tikzpicture}
-      \node (C)   at (0, 2) {$C$};
-      \node (A)   at (-3, 0) {$A$};
-      \node (B)   at (3, 0) {$B$};
-      \node (AxB) at (0, 0) {$A\times B$};
-      
-      \tikzset{mystyle/.style={->,thick}};
- 
-      \path (AxB) edge [mystyle] node[below]{$\pi_{1}$} (A);
-      \path (AxB) edge [mystyle] node[below]{$\pi_{2}$} (B);
-      
-      \path (C) edge[mystyle] node[left,above]{$f$} (A);
-      \path (C) edge[mystyle] node[right,above]{$g$} (B);
-      \tikzset{mystyle/.style={->,dashed}};
-      \path (C) edge [mystyle] node[right]{$\langle f,g\rangle$} (AxB);
-    \end{tikzpicture}
-  \end{center}
-  commute, i.e. $\langle f,g\rangle;\! \pi_{1} = f$ and $\langle f,g\rangle;\! \pi_{2} = g$.
-\end{definition}
-
-\begin{definition}
-  A~\emph{coproduct} of $A$ and $B$ is $A+B$ together with two \emph{injection arrows} $c_{1}: A\to A+B$, $c_{2}: B \to A+B$, such that for any object $C$ and pair of arrows $f: A\to C$ and $g: B\to C$ there is exactly one arrow $[f,g]: A+B \to C$ making the diagram below commute.
-  \begin{center}
-    \begin{tikzpicture}
-      \node (A)   at (-3, 0) {$A$};
-      \node (A+B) at (0,0)   {$A+B$};
-      \node (B)   at (3,0)   {$B$};
-      \node (C)   at (0,-2)  {$C$};
-
-      \tikzset{mystyle/.style={->,thick}};
-      \path (A) edge [mystyle] node[above]{$c_{1}$} (A+B);
-      \path (B) edge [mystyle] node[above]{$c_{2}$} (A+B);
-      \path (A) edge [mystyle] node[left,below]{$f$} (C);
-      \path (B) edge [mystyle] node[right,below]{$g$} (C);
-
-      \tikzset{mystyle/.style={->,thick,dashed}};
-      \path (A+B) edge [mystyle] node[right]{$[f,g]$} (C);
-    \end{tikzpicture}
-  \end{center}
-  \emph{Remark:} $[f,g]$ is a~case distinction. 
-\end{definition}
 
 \section{Initial $\Sigma$-algebras}
 \begin{minipage}[b]{0.4\linewidth}
