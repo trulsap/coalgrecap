@@ -1,5 +1,6 @@
 \documentclass{amsart}
 \usepackage{amsmath}
+\usepackage{bbm} % allows for \mathbb{}-like numbers
 \usepackage{amssymb}
 \usepackage{proof}
 \usepackage{cancel}
@@ -604,9 +605,9 @@ Now, suppose I provide two diagrams:
 \begin{minipage}[b]{0.4\linewidth}
 \begin{center}
 \begin{tikzpicture}
-\node (a1) at (-1, 1) {$\mathsf 1$};
+\node (a1) at (-1, 1) {$\mathbbm 1$}; % Truls dear, is this what you wanted?
 \node (a2) at (1, 1) {$\nn$};
-\node (b1) at (-1, -1) {$\mathsf 1$};
+\node (b1) at (-1, -1) {$\mathbbm 1$};
 \node (b2) at (1, -1) {$\nn$};
 
 \tikzset{mystyle/.style={->,thick}};  
@@ -649,9 +650,9 @@ We have that $f : \nn \to \nn$, but also that it is the map in a homomorphism fr
 \begin{minipage}[b]{0.4\linewidth}
 \begin{center}
 \begin{tikzpicture}
-\node (a1) at (-1, 1) {$\mathsf 1$};
+\node (a1) at (-1, 1) {$\mathbbm 1$};
 \node (a2) at (1, 1) {$\nn$};
-\node (b1) at (-1, -1) {$\mathsf 1$};
+\node (b1) at (-1, -1) {$\mathbbm 1$};
 \node (b2) at (1, -1) {$\nn$};
 
 \tikzset{mystyle/.style={->,thick}};  
