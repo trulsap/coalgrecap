@@ -581,7 +581,19 @@ Suppse we would like to define some function $f$ which, in the classical notatio
 \path (b1) edge [mystyle] node[left, scale=0.8]{$f'$} (c1);
 \path (b2) edge [mystyle] node[right, scale=0.8]{$f'$} (c2);
 \path (c1) edge [mystyle] node[above, scale=0.8]{$g'$} (c2);
-\end{tikzpicture} or something crazy like that...}: 
+\end{tikzpicture} and then some $l$ such that
+\begin{tikzpicture}[scale=0.4]
+\node[scale=0.7] (a) at (0, 0) {$\nn$};
+\node[scale=0.7] (b) at (3, 0) {$X(\nn)$};
+\node[scale=0.7] (c) at (6, 0) {$X(\nn)$};
+\node[scale=0.7] (d) at (9, 0) {$\nn$};
+
+\tikzset{mystyle/.style={->,thick}};  
+\path (a) edge [mystyle] node[below, scale=0.8]{$h'$} (b);
+\path (b) edge [mystyle] node[below, scale=0.8]{$f'$} (c);
+\path (c) edge [mystyle] node[below, scale=0.8]{$l$} (d);
+\path (a) edge [mystyle, bend left] node[above, scale=0.8]{$f$} (d);
+\end{tikzpicture}or something crazy like that...}: 
 \begin{align*}
 f(0) ~&:=~ c & \text{Base case}\\
 f(sx) ~&:=~ g(f(x)) & \text{Induction step}
