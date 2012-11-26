@@ -1,0 +1,6 @@
+In this file we can add links to other resources, and comments on their status.
+
+* CTO
+  Seems to be wikilike, has a few articles that hit exactly in our thing. 
+** [[http://tunes.org/wiki/algebra_20and_20coalgebra.html]]
+** [[http://tunes.org/wiki/induction_20and_20co-induction.html]]
