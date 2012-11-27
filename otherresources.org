@@ -9,3 +9,5 @@ In this file we can add links to other resources, and comments on their status.
    how this can be used to define functions (which I dont really understand),
    and also gives example of inductivly and co-inductively defined functions
    (more understandable)
+* Wikipedia
+** [[http://en.wikipedia.org/wiki/Limit_%2528category_theory%2529][http://en.wikipedia.org/wiki/Limit_%28category_theory%29]]
