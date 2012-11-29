@@ -253,7 +253,7 @@ set-theoretical sense, i.e.~they are just sets or proper classes.
 
 First we present a simple example, describing the category of sets.
 
-\subsubsection{Example: $\cat{Set}$}
+\begin{example}Example: $\cat{Set}$
 
 \begin{enumerate}
 \item Objects in $\cat{Set}$ are sets.
@@ -270,6 +270,7 @@ First we present a simple example, describing the category of sets.
   identity functions on $A$ and $B$ satisfy the equations required by
   the identity law: $id_B \circ f = f$ and $f \circ id_A = f$.
 \end{enumerate}
+\end{example}
 
 \subsection{Dual notions}
 
@@ -475,7 +476,6 @@ of $(f,f)$) in the following diagram
   \end{tikzpicture}
 \end{center}
 
-
 \section{Initial $\Sigma$-algebras}
 \begin{minipage}[b]{0.4\linewidth}
 \begin{center}
@@ -534,6 +534,100 @@ $(*)$ is a vector of appropriate arguments
 $$ op(i_1, \dots, i_n) = i.$$
 \item $\mathcal I$ has no propper subalgebras
 \end{itemize}
+
+\section{Functors}
+
+\begin{definition}[Functor]
+  Let $\acat{C}$ and $\acat{D}$ be any categories. A~\emph{functor} $F: \acat{C} \to \acat{D}$ is a~map that takes each $\acat{C}$-object $A$ to a~$\acat{D}$-object $F(A)$ and each $\acat{C}$-arrow $f: A\to B$ to a~$\acat{D}$-arrow $F(f): F(A) \to F(B)$, such that for all $\acat{C}$-objects $A$ and composable $\acat{C}$-arrows $f$ and $g$:
+  \begin{enumerate}
+  \item $F(id_{A}) = id_{F(A)}$
+  \item $F(f;\! g) = F(f);\! F(g)$.
+  \end{enumerate}
+\end{definition}
+
+Some examples of functors:
+
+\textbf{Constant functor (aka \emph{selection} functor)} is a~functor $Cd: \acat{C} \to \acat{D}$ that maps every object of $\acat{C}$ to a~fixed object $d$ in $\acat{D}$ and every morphism in $\acat{C}$ to the identity morphism on $d$.
+
+\textbf{Diagonal functor} $\Delta: \acat{C} \to \acat{C} \times \acat{C}$ takes each object $A$ of $\acat{C}$ to the object $(A,A)$ in the product category $\acat{C}\times\acat{C}$. Example of a~diagonal functor looks like this:
+\begin{center}
+  \begin{tikzpicture}
+    \node (C)   at (0, 2) {$A$};
+    \node (A)   at (-3, 0) {$A$};
+    \node (B)   at (3, 0) {$A$};
+    \node (AxB) at (0, 0) {$A\times A$};
+    
+    \tikzset{mystyle/.style={->,thick}};
+ 
+    \path (AxB) edge [mystyle]  (A);
+    \path (AxB) edge [mystyle]  (B);
+      
+    \path (C) edge[mystyle] node[left,above]{$id_{A}$} (A);
+    \path (C) edge[mystyle] node[right,above]{$id_{A}$} (B);
+    \tikzset{mystyle/.style={->,dashed}};
+    \path (C) edge [mystyle] node[right]{$\Delta_{A}$} (AxB);
+  \end{tikzpicture}
+\end{center}
+where $\Delta_{A} = \langle id_{A},id_{A}\rangle$.
+
+\textbf{Product functor} is a~functor $\times: \acat{C} \times \acat{C} \to \acat{C}$. It looks something like this:
+\begin{center}
+  \begin{tikzpicture}
+    \node (c1xcc2) at (0, 0) {$c_{1} \times_{c} c_{2}$};
+    \node (c1) at (-4, 0) {$c_{1}$};
+    \node (c2) at (4, 0) {$c_{2}$};
+
+    \node (c1pxdc2p) at (0, -3) {$c_{1}' \times_{d} c_{2}'$};
+    \node (c1p) at (-4, -3) {$c_{1}'$};
+    \node (c2p) at (4, -3) {$c_{2}'$};
+
+    \node (eq1) at (2, -1.5) {$=$};
+    \node (eq2) at (-2, -1.5) {$=$};
+
+    \tikzset{mystyle/.style={->,dashed}};  
+    \path (c1xcc2) edge[mystyle] node[right]{$\exists ! k$} (c1pxdc2p);
+
+    \tikzset{mystyle/.style={->,thick}};
+    \path (c1xcc2) edge [mystyle] node[above]{$\pi_1$} (c1);
+    \path (c1xcc2) edge [mystyle] node[above]{$\pi_i$} (c2);
+    \path (c1pxdc2p) edge [mystyle] node[above]{$\pi_1'$} (c1p);
+    \path (c1pxdc2p) edge [mystyle] node[above]{$\pi_i'$} (c2p);
+    \path (c1) edge[mystyle] node[left]{$f_{1}$} (c1p);
+    \path (c2) edge[mystyle] node[right]{$f_{2}$} (c2p);
+  \end{tikzpicture}
+\end{center}
+where $k = \langle \pi_{1};\! f, \pi_{i};\! f_{i}\rangle = f_{1}\times f_{2}$.
+
+\textbf{Powerset functor(s)}. Ok, hold tight. We say that a~\emph{powerset functor} is such a~functor $P: \cat{Set} \to \cat{Set}$ that maps each set to its power set and each function $f: X \to Y$ to the map which sends $U \subseteq X$ to its image $f(U) \subseteq Y$. Then a~\emph{covariant powerset} functor is such a~functor $G: \cat{Set} \to \cat{Set}$ that maps each function $f: A \to B$ into $G(f): G(A) \to G(B)$ which is defined by $G(f)(X) = f(X)$ for any $X \subseteq A$. Also, a~\emph{contravariant powerset} functor is such a~functor $H: \cat{Set} \to \cat{Set}$ that sends $f: X \to Y$ to the map which sends $V \subseteq Y$ to its inverse image $f^{-1} (V) \subseteq X$. 
+
+\textbf{Function space functor} looks like this:
+
+\begin{minipage}{0.45\textwidth}
+  \begin{tikzpicture}
+    \node (x)    at (0, 0)   {$X$};
+    \node (atox) at (2, 0)   {$[A \to X]$};
+    \node (y)    at (0,-2)   {$Y$};
+    \node (atoy) at (2,-2)   {$[A \to Y]$};
+
+    \tikzset{mystyle/.style={->,thick}};
+    \path (x) edge [mystyle] (atox);
+    \path (x) edge [mystyle] (y);
+    \path (y) edge [mystyle] (atoy);
+    \path (atox) edge [mystyle] node[right]{$\_;\! f$} (atoy);
+  \end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.45\textwidth}
+where $\_;\! f$ is a~composition like this:
+\begin{tikzpicture}
+  \node (A) at (0,0) {$A$};
+  \node (X) at (1.5,0) {$X$};
+  \node (Y) at (1.5,-1.5) {$Y$};
+  \tikzset{mystyle/.style={->}};
+  \path (A) edge[mystyle] node[above] {$g$} (X);
+  \path (X) edge[mystyle] node[right] {$f$} (Y);
+  \path (A) edge[mystyle] node[below,left] {$g;\! f$} (Y);
+\end{tikzpicture}
+\end{minipage}
 
 \section{Induction $\simeq$ Initiality ($\simeq$ Universal property of Constructors)}
 \truls{This section has eroded in to ramblings. I'm tired and I don't think I understand this anymore.}
@@ -968,10 +1062,8 @@ We still need $\tau : T_*(\mathsf 1) \to T(T_*(\mathsf 1))$.
 
 \truls{Could someone descripbe this process?}
 
+\section{Modal Logic}
+\input{modallogic.tex}
+
 \end{document}
 
-
-%%% Local Variables: 
-%%% mode: latex
-%%% TeX-master: t
-%%% End: 
