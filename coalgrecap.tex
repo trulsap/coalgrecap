@@ -598,7 +598,7 @@ where $\Delta_{A} = \langle id_{A},id_{A}\rangle$.
 \end{center}
 where $k = \langle \pi_{1};\! f, \pi_{i};\! f_{i}\rangle = f_{1}\times f_{2}$.
 
-\textbf{Covariant powerset functor (aka \emph{wtf?})} is a~functor $P: \cat{Set} \to \cat{Set}$ which takes a~map $f: X \to Y$ to a~map $P(f): P(X) \to P(Y)$ with $(Pf)(U) = f[U]$.\footnote{\piotr{Found this in some crazy paper, and I've no idea what it means. My own notes make no sense, so no help there. }}
+\textbf{Powerset functor(s)}. Ok, hold tight. We say that a~\emph{powerset functor} is such a~functor $P: \cat{Set} \to \cat{Set}$ that maps each set to its power set and each function $f: X \to Y$ to the map which sends $U \subseteq X$ to its image $f(U) \subseteq Y$. Then a~\emph{covariant powerset} functor is such a~functor $G: \cat{Set} \to \cat{Set}$ that maps each function $f: A \to B$ into $G(f): G(A) \to G(B)$ which is defined by $G(f)(X) = f(X)$ for any $X \subseteq A$. Also, a~\emph{contravariant powerset} functor is such a~functor $H: \cat{Set} \to \cat{Set}$ that sends $f: X \to Y$ to the map which sends $V \subseteq Y$ to its inverse image $f^{-1} (V) \subseteq X$. 
 
 \textbf{Function space functor} looks like this:
 
