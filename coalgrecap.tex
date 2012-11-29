@@ -1,7 +1,7 @@
 \documentclass{amsart}
 \usepackage{amsmath}
 \usepackage{bbm} % allows for \mathbb{}-like numbers
-\usepackage{amssymb}
+\usepackage{amssymb,stmaryrd}
 \usepackage{proof}
 \usepackage{cancel}
 \usepackage[usenames,dvipsnames]{color}
@@ -20,6 +20,7 @@
 \newtheorem{cor}[thm]{Corollary}
 \newtheorem{lem}[thm]{Lemma}
 \newtheorem{conjecture}[thm]{Conjecture}
+\theoremstyle{definition}
 \newtheorem{definition}[thm]{Definition}
 \newtheorem{proposition}[thm]{Proposition}
 \newtheorem{example}[thm]{Example}
@@ -1064,6 +1065,9 @@ We still need $\tau : T_*(\mathsf 1) \to T(T_*(\mathsf 1))$.
 
 \section{Modal Logic}
 \input{modallogic.tex}
+
+\section{Modal $\mu$-calculus}
+\input{modal-my-talk-erik.tex}
 
 \end{document}
 
