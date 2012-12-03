@@ -477,6 +477,25 @@ of $(f,f)$) in the following diagram
   \end{tikzpicture}
 \end{center}
 
+
+\begin{definition}[CoEqualizer]
+  \label{def:equalizer}
+   An equalizer of two parallel morphisms $f, g : A \rightarrow B$
+  in a category C consists of an object C and a morphism $c : B \rightarrow C$
+  with $ f;m = g;m$. Moreover, the pair $(C, c)$ satisfies the following universal
+  property:
+  \begin{itemize}
+  \item For any other object D and morphism $h : B \rightarrow D$ with $f; h  = g ;
+    h$ there exists a unique morphism $k : C \rightarrow D$ such that $c; k =
+    h$.
+  \end{itemize}
+  Picture:
+  \xymatrix{
+    A \ar@/^/[r]^{f} \ar@/_/[r]_{g} & B\ar[r]^{c}\ar[dr]^{h}  & C\ar@{.>}[d]^{\exists !k}\\
+        & & D }     
+  \end{definition}
+
+
 \section{Initial $\Sigma$-algebras}
 \begin{minipage}[b]{0.4\linewidth}
 \begin{center}
