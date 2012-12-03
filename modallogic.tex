@@ -693,11 +693,10 @@ Is there a morphism from $(\alpha, A)$ to $(\beta, B)$? Indeed there is. Let $f 
   \textbf{(Lambek's Lemma)} If $F$ as an initial algebra, then it is a fixed point.
 \end{lem}
 
-A more verbose restatement of this lemma is that if $\mathcal I : \cat{Alg}(F)$ is an initial object, then $\mathcal I \simeq F(\mathcal I)$. (Of course, the dual also holdes. Hence the title of this subsection.)
+A more verbose restatement of this lemma is that if $\mathcal I : \cat{Alg}(F)$ is an initial object, then $\mathcal I \simeq F(\mathcal I)$. (Of course, the dual also holds. Hence the title of this subsection.)
 
-\begin{proof}
-  Let $\acat C = \cat{Alg}(F)$. Notice that whenever $(A, \alpha) : \acat C$, then also $F(A, \alpha) : \acat C$. This follows from the fact that $F$ is an endo-functor.
+Here's another version of the lemma. 
 
-TBC
- 
-\end{proof}
+\begin{lem} \textbf{(Lambek's Lemma)} Let $\acat C$ be a category, let $F : \acat C \to \acat C$ be a functor, and let $(A, \alpha)$ be an initial algebra for $F$. Then $\alpha$ is an isomorphism: there is a morphism $\gamma : F(A) \to A$ such that $\alpha ; \gamma = id_A$ and $\gamma ; \alpha = id_{F(A)}$.  
+\end{lem}
+
