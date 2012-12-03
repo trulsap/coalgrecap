@@ -642,23 +642,10 @@ f(c_2) &= \dots & \text{Base case 2} \\
 f(u(x)) &= \dots(f(\dots)) & \text{Induction step}
 \end{align*}
 
-This should 
-\begin{enumerate}
-\item Define $f$ uniquely, and
-\item Define $f$ completely.
-\end{enumerate}
-
-Or, in other words
-\begin{enumerate}
-\item if both $f$ and $g$ complies with the definition, then\footnote{Upto isomorphism.} $f = g$, and \\
-(uniqueness of homomorphism from initial object)
-\item For every $x$, $f(x)$ is well-defined.\\
-(the initial algebra has no proper subalgebras)
-\end{enumerate}
-
 Structurally we can define a function as an algebra, and the inductive definition of the function described by the algebra will just be a homomorphism from the initial object to this given algebra. 
 
 \begin{example} Let $\Sigma_{\mathcal N} = (OP_{\mathcal N}, ar_{\mathcal N}) = (\{0, s\}, \{(0, 0), (s, 1)\})$ be the signature of the natural numbers. The initial algebra is the term-algebra $\mathcal I_{\mathcal N} = (\nn; 0, s)$ where we take $\nn$ to be the set of ground terms $\{0, s0, ss0, sss0, \dots\}$. 
+
 
 Suppse we would like to define some function $f$ which, in the classical notation would be defined as follows\footnote{I tried to make $f(sx) := g(f(h(x)))$, but I'm not sure of how to handle the $h$ yet... \\\begin{tikzpicture}[scale=0.4]
 \node[scale=0.7] (a1) at (-1, 1) {$\nn$};
@@ -736,11 +723,12 @@ Recall that $c$ is some constant expression in $\mathcal I_{\mathcal N}$ and $g$
 We have that $f : \nn \to \nn$, but also that it is the map in a homomorphism from $\mathcal I_{\mathcal N}$ to $\ca_f$ where $\ca_f = (f(\nn); c, g)$. We can see that, treated as a homomorphism in $\cat{Alg}(\Sigma)$, it maps $n : \mathcal I_{\mathcal N}$ to $f(n) : \ca_f$.
 \end{example}
 
+The point of this execise is that the existence of such a homomorphism shows that the function \textit{can be defined by recursion} and the \textit{uniqueness yields a proof by induction.} [Larry]
 
 \begin{example}Let's define the function $2 * \_ : \nn \to \nn$! 
 \begin{description}
 \item[Old school] Base case: $2 * 0 := 0$; induction step: $2 * s(n) := (2 * n) + 2$.
-\item[21st century] ``Make it communte!'' (Paraphrasing Tom Waits)
+\item[21st century] ``Make it reign!'' (Paraphrasing Tom Waits)
 \begin{figure}[ht]
 \begin{minipage}[b]{0.4\linewidth}
 \begin{center}
@@ -1008,7 +996,6 @@ For simplicity assume that $T : \mathsf{Set} \to \mathsf{Set}$. Then $\mathcal I
 \end{figure}
 
 Now, to construct the final coalgebra:\\
-
 \begin{figure}[ht]
 \begin{tikzpicture}
 \node (01) at (0, 0) {$\mathsf 1$};

@@ -687,39 +687,17 @@ Is there a morphism from $(\alpha, A)$ to $(\beta, B)$? Indeed there is. Let $f 
 
 
 
-\subsection{Canonical models are final objects}
-\truls{This subsection is controversial. Do not trust it!}
-The elements in the category $\mathsf{Coalg}(\wp(P)\times\wp(A)) = \mathcal C$ are extactly all Kripke models (all models over arbitrary frames). Let $\mathfrak M^C$ be the canonical model for the the logic \textit{K}. A morphism in $\mathcal C$ is a bounded morphism from one model to another (as sketched above), i.e., a map from states to states such that (...)
+\subsection{Canonical models are \emph{not} final objects} The category where the canonical model lives, $\cat{Alg}(\wp(A) \times \wp(X))$, doesn't have any final objects.
 
-\begin{proposition}
-The unique bounded morphism $id_{\mathfrak M^C} : \mathfrak M^C \to \mathfrak M^C$ is the identity map (mapping each state (maximal consistent set of formulas) to itself).\end{proposition}
+\begin{lem}
+  \textbf{(Lambek's Lemma)} If $F$ as an initial algebra, then it is a fixed point.
+\end{lem}
 
+A more verbose restatement of this lemma is that if $\mathcal I : \cat{Alg}(F)$ is an initial object, then $\mathcal I \simeq F(\mathcal I)$. (Of course, the dual also holdes. Hence the title of this subsection.)
 
-\begin{proof} Two claims:
-\begin{description}
-\item[Bounded morphism] the identity map $id_{\mathfrak M^C}$ is a bounded morphism.
-\item[Unique] Suppose there was a bounded morphism $f : \mathfrak M^C \to \mathfrak M^C$ distinct from the identity map. Then there is some state $w$ such that $w \neq f(w)$. Let $\phi \in w$. We show that $\phi \in f(w)$. We prove the claim $\phi \in w \Leftrightarrow \phi \in f(w)$ by induction on $\phi$:
-\begin{description}
-\item[Base case ($p$)] $p \in w \Leftrightarrow w \Vdash p$, but since $f$ is a bounded morphism, $f(w) \Vdash p$, so $p \in f(w)$.
-\item[Induction step(s)] Boolean cases are simple.
-\begin{description}
-\item[$\phi = \neg \psi$] $\neg \psi \in w \Leftrightarrow \psi \notin w$ (by the construction of $\mathfrak M^C$). By IH $\psi \notin f(w)$, and hence $\neg \psi \in f(w)$ (by construction).
-\item[$\phi = \psi_1 \wedge \psi_2$] $\psi_1 \wedge \psi_2 \in w \Leftrightarrow \text{both } \psi_1 \in w \text{ and } \psi_2 \in w$ (corrolary from construction). IH yields $\psi_1,\psi_2 \in f(w)$ and definition of $\mathfrak M^C$ yields $\psi_1 \wedge \psi_2 \in f(w)$.
-\item[$\phi = \lozenge \psi$] Let $v$ be an arbitrary state such that $wR^Cv$ and $v \Vdash \psi$. Since $f$ is a bounded morphism, $f(w)R^Cf(v)$. IH gives $f(v) \Vdash \psi$, but then $f(w)\Vdash \lozenge \psi$.
-\end{description}
-\end{description}
-So $\phi \in w \Leftrightarrow \phi \in f(w)$ and $f$ needs to be the identity map.
-\end{description}
-So $id_{\mathfrak M^C}$ is the unique bounded morphism in $\mathcal C$ from $\mathfrak M^C$ to itself.
+\begin{proof}
+  Let $\acat C = \cat{Alg}(F)$. Notice that whenever $(A, \alpha) : \acat C$, then also $F(A, \alpha) : \acat C$. This follows from the fact that $F$ is an endo-functor.
+
+TBC
+ 
 \end{proof}
-
-A morphism from an arbitrary model into the canonical model is unique modulo the choice of how to extend a set of formulas to maximal sets.
-\begin{proof} Here is a quote:
-\begin{quote}
-Grif: ``You can't call dibs on a spaceship! That's ridiculous!''
-\begin{flushright}
-from \textit{Red vs. Blue}, Season 5, Ep. \textit{``You can't park here''}
-\end{flushright}
-\end{quote}
-\end{proof}
-
